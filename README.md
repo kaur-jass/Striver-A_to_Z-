@@ -110,5 +110,5 @@ This repository is continuously updated as I solve more problems and move forwar
 
 ---
 
-**Consistency over perfection. One problem at a time.**
+**Consistency over perfection. One problem at a time. 🫶** 
 
