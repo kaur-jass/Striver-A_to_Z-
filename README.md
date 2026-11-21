@@ -1,2 +1,3 @@
 # Striver-A_to_Z-
-This is my codes, i have solved it 
+Codes of Striver's A to Z Sheet 
+
