@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int priority(char c) {
+    if(c == '^') return 3; 
+    else if(c == '*' || c == '/') return 2; 
+    else if(c == '+' || c == '-') return 1; 
+    else return -1; 
+}
+
+string infixToPrefix(string s) {
+    reverse(s.begin(), s.end());
+    // Swap the brackets 
+    for(int i = 0; i < s.length(); i++) {
+        if(s[i] == '(') s[i] = ')'; 
+        else if(s[i] == ')') s[i] = '('; 
+    }
+    int n = s.length();
+    int i = 0;
+    stack<char> st; 
+    string res = ""; 
+    while(i<n) {
+        if(s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9') {
+            res += s[i]; 
+        }
+        else if (s[i] == '('){
+            st.push(s[i]);
+        }
+        else if(s[i] == ')') {
+            while(!st.empty() && st.top() != '(') {
+                res += st.top(); 
+                st.pop(); 
+            }
+            if(!st.empty()) st.pop(); 
+        }
+        else { // Operators left 
+            // Left-associative operators: equal precedence requires popping in the reversed approach.
+            // Right-associative operators: equal precedence requires not popping.
+            while(!st.empty() && (priority(st.top()) > priority(s[i]) ||
+                (priority(st.top()) == priority(s[i]) && s[i] == '^'))) {
+                res += st.top();
+                st.pop();
+            }
+            st.push(s[i]);
+        }
+        i++; 
+    }
+    while(!st.empty()) {
+        res += st.top(); 
+        st.pop(); 
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}; 
+
+int main() {
+    string s; 
+    cout << "Enter infix expression: ";
+    cin >> s; 
+    cout << "Prefix expression: " << infixToPrefix(s) << endl; 
+    return 0; 
+}

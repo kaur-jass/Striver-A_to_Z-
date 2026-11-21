@@ -1,0 +1,46 @@
+ #include<bits/stdc++.h>
+using namespace std; 
+class Solution{
+    private:
+        int func(int day, int last, vector<vector<int>> &points){
+            if(day == 0){
+                int maxi = 0; 
+                for(int task = 0; task<3; task++){
+                    if(task != last){
+                        maxi = max(maxi, points[0][task]); 
+                    }
+                }
+                return maxi; 
+            }
+            int maxi = 0; 
+            for(int task = 0; task<3; task++){
+                if(task != last){
+                    int pts = points[day][task] + func(day-1, task, points); 
+                    maxi = max(pts, maxi); 
+                }
+            }
+            return maxi; 
+        }
+    public:
+        int ninjaTraining(int n, vector<vector<int>> &points){
+            return func(n-1, 3, points); 
+        }
+}; 
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<vector<int>> points(n, vector<int>(3));
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < 3; j++) {
+            cin >> points[i][j];
+        }
+    }
+
+    Solution obj;
+    cout << obj.ninjaTraining(n, points) << endl;
+
+    return 0;
+}
